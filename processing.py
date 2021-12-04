@@ -1,5 +1,6 @@
 import fitz
-
+import regex as re
+from nltk import sent_tokenize
 
 def check_contain(r_word, points):
     r = fitz.Quad(points).rect
@@ -47,3 +48,21 @@ def pdf_to_text(filename):
     doc = fitz.open(filename)
     text = ' '.join([e.get_text() for e in doc])
     return text
+
+
+def extract_context(excerpt, document, size=400):
+    document = document.replace('\n', ' ')
+    excerpt = excerpt.strip()
+
+    excerpt = re.sub(r'\s+', ' ', excerpt)
+    document = re.sub(r'\s+', ' ', document)
+    
+    excerpt_start = re.search(re.escape(excerpt), document).start()
+    excerpt_end = excerpt_start + len(excerpt)
+
+    context_start = excerpt_start - size
+    context_end = excerpt_end + size
+    context = document[context_start:context_end]
+    context = ' '.join(sent_tokenize(context)[1:-1])
+    
+    return context
