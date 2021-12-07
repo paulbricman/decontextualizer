@@ -74,17 +74,19 @@ def extract_context(excerpt, document, size=400):
 
 
 def download_model():
+    model_specific_path = 't5_base/1611267950' #t5_3B/1611333896 
+
     if not os.path.exists('model/saved_model.pb'):
-        saved_model = requests.get('https://storage.googleapis.com/decontext_dataset/t5_base/1611267950/saved_model.pb')
+        saved_model = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/saved_model.pb')
         open('model/saved_model.pb', 'wb').write(saved_model.content)
 
-        variables0 = requests.get('https://storage.googleapis.com/decontext_dataset/t5_base/1611267950/variables/variables.data-00000-of-00002')
+        variables0 = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/variables/variables.data-00000-of-00002')
         open('model/variables/variables.data-00000-of-00002', 'wb').write(variables0.content)
 
-        variables1 = requests.get('https://storage.googleapis.com/decontext_dataset/t5_base/1611267950/variables/variables.data-00001-of-00002')
+        variables1 = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/variables/variables.data-00001-of-00002')
         open('model/variables/variables.data-00001-of-00002', 'wb').write(variables1.content)
 
-        variables_index = requests.get('https://storage.googleapis.com/decontext_dataset/t5_base/1611267950/variables/variables.index')
+        variables_index = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/variables/variables.index')
         open('model/variables/variables.index', 'wb').write(variables_index.content)
 
 
@@ -118,7 +120,7 @@ def create_input(excerpt, context):
 
 
 def decontextualize_excerpt(excerpt, context, predict_fn):
-    input = create_input(e[0], e[1])
+    input = create_input(excerpt, context)
     if input is not None:
         output = predict_fn([input])[0].decode('utf-8')
         return output.split('####')[1]
