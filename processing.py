@@ -7,6 +7,7 @@ import tensorflow_text
 import requests
 import os
 
+
 def check_contain(r_word, points):
     r = fitz.Quad(points).rect
     r.intersect(r_word)
@@ -44,23 +45,23 @@ def pdf_to_excerpts(filename):
         
         for annot in annots:
             if annot is not None:
-                excerpts += [extract_annot(annot, words)]
+                excerpt = extract_annot(annot, words)
+                excerpt = excerpt.strip()
+                excerpt = re.sub(r'\s+', ' ', excerpt)
+                excerpts += [excerpt]
 
     return excerpts
 
 
 def pdf_to_text(filename):
-    doc = fitz.open(filename)
-    text = ' '.join([e.get_text() for e in doc])
-    return text
+    document = fitz.open(filename)
+    document = ' '.join([e.get_text() for e in document])
+    document = document.replace('\n', ' ')
+    document = re.sub(r'\s+', ' ', document)
+    return document
 
 
 def extract_context(excerpt, document, size=400):
-    document = document.replace('\n', ' ')
-    excerpt = excerpt.strip()
-
-    excerpt = re.sub(r'\s+', ' ', excerpt)
-    document = re.sub(r'\s+', ' ', document)
     
     excerpt_start = re.search(re.escape(excerpt), document).start()
     excerpt_end = excerpt_start + len(excerpt)
@@ -103,7 +104,7 @@ def create_input(excerpt, context):
     while size < len(context_sents) and wrapper is None:
         left = 0
 
-        while left + size < len(context_sents) and wrapper is None:
+        while left + size <= len(context_sents) and wrapper is None:
             if excerpt in ' '.join(context_sents[left:left + size]):
                 wrapper = (left, left + size)
             left += 1
@@ -124,5 +125,4 @@ def decontextualize_excerpt(excerpt, context, predict_fn):
     if input is not None:
         output = predict_fn([input])[0].decode('utf-8')
         return output.split('####')[1]
-
 
