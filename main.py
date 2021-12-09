@@ -13,3 +13,4 @@ st.set_page_config(
 
 components.hero_section()
 components.add_section()
+components.footer_section()

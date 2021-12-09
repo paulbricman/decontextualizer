@@ -54,3 +54,38 @@ def add_section():
 
             with st.expander('text'):
                 st.markdown('\n\n'.join(outputs))
+
+
+def footer_section():
+    hide_streamlit_style = '''
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                </style>
+                '''
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+    footer = '''
+    ---
+    <style>
+    button {
+        border: 4px solid;
+        border-color: #228b22;
+        border-radius: 4px;
+        background-color: #228b22;
+        color: #fffffd;
+        font-weight: bold;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    </style>
+    <center>
+        <div>
+            <a href="https://paulbricman.com/contact"><button>send feedback</button></a>
+            <a href="https://github.com/paulbricman/lexiscore"><button>learn more</button></a>
+            <a href="https://github.com/sponsors/paulbricman"><button>support me 🤍</button></a>
+        </div>
+    </center>
+    '''
+
+    st.markdown(footer, unsafe_allow_html=True)
