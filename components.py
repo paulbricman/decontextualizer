@@ -4,6 +4,14 @@ import pandas as pd
 
 
 def hero_section():
+    hide_streamlit_style = '''
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                </style>
+                '''
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    
     st.title('📤 decontextualizer')
     st.markdown('A pipeline for making highlighted text stand-alone.')
     st.markdown('---')
@@ -57,14 +65,6 @@ def add_section():
 
 
 def footer_section():
-    hide_streamlit_style = '''
-                <style>
-                #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                </style>
-                '''
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
     footer = '''
     ---
     <style>
