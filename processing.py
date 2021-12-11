@@ -77,9 +77,15 @@ def extract_context(excerpt, document, size=400):
 def download_model():
     model_specific_path = 't5_base/1611267950' #t5_3B/1611333896 
 
+    if not os.path.exists('model'):
+        os.makedirs('my_folder')
+
     if not os.path.exists('model/saved_model.pb'):
         saved_model = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/saved_model.pb')
         open('model/saved_model.pb', 'wb').write(saved_model.content)
+
+        if not os.path.exists('model/variables'):
+            os.makedirs('model/variables')
 
         variables0 = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/variables/variables.data-00000-of-00002')
         open('model/variables/variables.data-00000-of-00002', 'wb').write(variables0.content)
