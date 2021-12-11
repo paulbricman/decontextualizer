@@ -78,7 +78,7 @@ def download_model():
     model_specific_path = 't5_base/1611267950' #t5_3B/1611333896 
 
     if not os.path.exists('model'):
-        os.makedirs('my_folder')
+        os.makedirs('model')
 
     if not os.path.exists('model/saved_model.pb'):
         saved_model = requests.get('https://storage.googleapis.com/decontext_dataset/' + model_specific_path + '/saved_model.pb')
