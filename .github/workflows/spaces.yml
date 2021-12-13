@@ -9,6 +9,8 @@ on:
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
+    environment: 
+      name: default
     steps:
       - uses: actions/checkout@v2
         with:
