@@ -25,6 +25,9 @@ def add_section():
         if st.session_state['doc'] is None:
             st.warning('Please specify a file.')
         else:
+            if not os.path.exists('tmp'):
+                os.makedirs('tmp')
+                
             filename = os.path.join('tmp', st.session_state['doc'].name)
             f = open(filename, 'wb+')
             f.write(st.session_state['doc'].getbuffer())

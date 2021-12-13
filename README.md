@@ -1,3 +1,14 @@
+---
+title: Decontextualizer
+emoji: 📤
+colorFrom: green
+colorTo: gray
+sdk: streamlit
+app_file: main.py
+pinned: false
+---
+
+
 ![](https://paulbricman.com/assets/img/decontextualizer_featured.png)
 # Decontextualizer
 
