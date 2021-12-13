@@ -1,5 +1,5 @@
 ---
-title: Decontextualizer
+title: decontextualizer
 emoji: 📤
 colorFrom: green
 colorTo: gray
