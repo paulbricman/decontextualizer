@@ -4,6 +4,8 @@ import pandas as pd
 
 
 def hero_section():
+    st.info('ℹ️ This tool is part of [a suite of experimental tools for thought](https://paulbricman.com/thoughtware) which incorporate AI primitives in knowledge work.')
+
     hide_streamlit_style = '''
                 <style>
                 #MainMenu {visibility: hidden;}
