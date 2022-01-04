@@ -12,7 +12,7 @@ def check_contain(r_word, points):
     r = fitz.Quad(points).rect
     r.intersect(r_word)
 
-    if r.get_area() >= r_word.get_area() * 0.1:
+    if r.get_area() >= r_word.get_area() * 0.8:
         contain = True
     else:
         contain = False
@@ -44,7 +44,7 @@ def pdf_to_excerpts(filename):
         annots = page.annots()
         
         for annot in annots:
-            if annot is not None:
+            if annot is not None and annot.vertices is not None:
                 excerpt = extract_annot(annot, words)
                 excerpt = excerpt.strip()
                 excerpt = re.sub(r'\s+', ' ', excerpt)
@@ -62,16 +62,20 @@ def pdf_to_text(filename):
 
 
 def extract_context(excerpt, document, size=400):
-    
-    excerpt_start = re.search(re.escape(excerpt), document).start()
-    excerpt_end = excerpt_start + len(excerpt)
+    print(excerpt)
+    excerpt_start = re.search(re.escape(excerpt), document)
+    if excerpt_start is not None:
+        excerpt_start = excerpt_start.start()
+        excerpt_end = excerpt_start + len(excerpt)
 
-    context_start = excerpt_start - size
-    context_end = excerpt_end + size
-    context = document[context_start:context_end]
-    context = ' '.join(sent_tokenize(context)[1:-1])
-    
-    return context
+        context_start = excerpt_start - size
+        context_end = excerpt_end + size
+        context = document[context_start:context_end]
+        context = ' '.join(sent_tokenize(context)[1:-1])
+        
+        return context
+    else:
+        return excerpt
 
 
 def download_model():
